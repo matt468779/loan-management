@@ -1,5 +1,12 @@
+import { Loan } from 'src/loan/entities/loan.entity';
 import { User } from 'src/user/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Account {
@@ -14,4 +21,7 @@ export class Account {
 
   @ManyToOne(() => User, (user) => user.accounts)
   user: User;
+
+  @OneToOne(() => Loan, (loan: Loan) => loan.account)
+  loan: Loan;
 }

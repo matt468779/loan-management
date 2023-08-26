@@ -9,6 +9,8 @@ import { AccountModule } from './account/account.module';
 import { Account } from './account/entities/account.entity';
 import { Share } from './share/entities/share.entity';
 import { ShareModule } from './share/share.module';
+import { LoanModule } from './loan/loan.module';
+import { Loan } from './loan/entities/loan.entity';
 
 @Module({
   imports: [
@@ -24,13 +26,14 @@ import { ShareModule } from './share/share.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASENAME'),
-        entities: [User, Account, Share],
+        entities: [User, Account, Share, Loan],
         synchronize: true,
       }),
     }),
     AuthModule,
     AccountModule,
     ShareModule,
+    LoanModule,
   ],
 })
 export class AppModule {}

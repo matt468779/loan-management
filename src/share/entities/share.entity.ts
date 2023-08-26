@@ -1,5 +1,12 @@
+import { Loan } from 'src/loan/entities/loan.entity';
 import { User } from 'src/user/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Share {
@@ -21,6 +28,9 @@ export class Share {
   @Column({ default: 'Addis International Bank' })
   share_owner_bank: string;
 
-  @ManyToOne(() => User, (user) => user.accounts)
+  @ManyToOne(() => User, (user) => user.shares)
   user: User;
+
+  @OneToOne(() => Loan, (loan: Loan) => loan.share)
+  loan: Loan;
 }

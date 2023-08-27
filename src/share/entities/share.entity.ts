@@ -10,11 +10,11 @@ import {
 
 @Entity()
 export class Share {
-  @PrimaryGeneratedColumn()
-  certificate_number: number;
+  @PrimaryGeneratedColumn('uuid')
+  certificateNumber: string;
 
   @Column({ default: '' })
-  share_details: string;
+  shareDetails: string;
 
   @Column({ default: 1 })
   price: number;
@@ -23,10 +23,10 @@ export class Share {
   amount: number;
 
   @Column({ type: 'date', default: () => 'NOW()' })
-  purchase_date: string;
+  purchaseDate: string;
 
   @Column({ default: 'Addis International Bank' })
-  share_owner_bank: string;
+  shareOwnerBank: string;
 
   @ManyToOne(() => User, (user) => user.shares)
   user: User;

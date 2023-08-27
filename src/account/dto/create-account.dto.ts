@@ -9,9 +9,9 @@ export class CreateAccountDto {
 
   @ApiProperty()
   @IsString()
-  account_type: string;
+  accountType: string;
 
   @ApiProperty()
   @IsNumber()
-  initial_balance: number;
+  initialBalance: number;
 }

@@ -22,7 +22,7 @@ export class Loan {
   account: Account;
 
   @Column()
-  payment_due: number;
+  paymentDue: number;
 
   @Column()
   amount: number;

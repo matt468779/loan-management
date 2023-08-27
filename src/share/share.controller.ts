@@ -14,8 +14,8 @@ import { Share } from './entities/share.entity';
     type: Share,
   },
   params: {
-    certificate_number: {
-      field: 'certificate_number',
+    certificateNumber: {
+      field: 'certificateNumber',
       type: 'number',
       primary: true,
     },
@@ -27,6 +27,7 @@ import { Share } from './entities/share.entity';
         eager: true,
       },
     },
+    alwaysPaginate: true,
   },
 })
 @Controller('share')
@@ -42,14 +43,14 @@ export class ShareController implements CrudController<Share> {
     const share = await this.base.getOneBase(req);
 
     const now = Date.now();
-    const purchase_date = new Date(share.purchase_date);
-    const diff = Math.abs(now.valueOf() - purchase_date.valueOf());
+    const purchaseDate = new Date(share.purchaseDate);
+    const diff = Math.abs(now.valueOf() - purchaseDate.valueOf());
     const diffDays = Math.ceil(diff / (1000 * 3600 * 24));
     const remainder = diffDays % 30;
     const diffMonths = (diffDays - remainder) / 30 + Number(remainder >= 15);
-    const loan_approved = 0.9 * share.amount * diffMonths;
+    const loanApproved = 0.9 * share.amount * diffMonths;
 
-    const result = { ...share, loan_approved: loan_approved };
+    const result = { ...share, loanApproved: loanApproved };
 
     return result;
   }

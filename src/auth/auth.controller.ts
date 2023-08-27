@@ -25,8 +25,12 @@ export class AuthController {
   // @UseGuards(LocalAuthGuard)
   @Post('auth/login')
   async login(@Body() body) {
-    if (await this.authService.validateUser(body.phone_number, body.password)) {
-      return this.authService.login(body);
+    const user: User = await this.authService.validateUser(
+      body.phoneNumber,
+      body.password,
+    );
+    if (user) {
+      return this.authService.login(user);
     } else {
       return new UnauthorizedException('phone number or password is incorrect');
     }
@@ -43,18 +47,18 @@ export class AuthController {
   async create(@Body() createUserDto: CreateUserDto) {
     if (
       !(await this.userService.findOne({
-        where: { phone_number: createUserDto.phone_number },
+        where: { phoneNumber: createUserDto.phoneNumber },
       }))
     ) {
-      const activation_number = Math.floor(1000 + Math.random() * 9000);
-      Logger.log(activation_number);
+      const activationNumber = Math.floor(1000 + Math.random() * 9000);
+      Logger.log(activationNumber);
 
       const user = new User();
-      user.first_name = createUserDto.first_name;
-      user.last_name = createUserDto.last_name;
-      user.activation_number = activation_number;
+      user.firstName = createUserDto.firstName;
+      user.lastName = createUserDto.lastName;
+      user.activationNumber = activationNumber;
       user.address = createUserDto.address;
-      user.phone_number = createUserDto.phone_number;
+      user.phoneNumber = createUserDto.phoneNumber;
 
       return this.userService.create(user);
     } else {

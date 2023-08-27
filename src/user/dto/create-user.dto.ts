@@ -1,13 +1,13 @@
 import { Unique } from 'typeorm';
 import { IsEmail, IsJSON, IsString } from 'class-validator';
-@Unique(['phone_number'])
+@Unique(['phoneNumber'])
 export class CreateUserDto {
   @IsString()
-  first_name: string;
+  firstName: string;
   @IsString()
-  last_name: string;
+  lastName: string;
   @IsEmail()
-  phone_number: string;
+  phoneNumber: string;
   @IsString()
   password: string;
   @IsJSON()

@@ -16,13 +16,13 @@ export class CreateShareDto {
 
   @ApiProperty()
   @IsString()
-  share_details: string;
+  shareDetails: string;
 
   @ApiProperty()
   @IsString()
-  share_owner_bank: string;
+  shareOwnerBank: string;
 
   @ApiProperty()
   @IsNumber()
-  initial_balance: number;
+  initialBalance: number;
 }

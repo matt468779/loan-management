@@ -11,7 +11,7 @@ import {
 @Entity()
 export class Account {
   @PrimaryGeneratedColumn()
-  account_number: number;
+  accountNumber: number;
 
   @Column({ default: 'saving' })
   account_type: string;

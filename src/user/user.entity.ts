@@ -10,25 +10,25 @@ export class User {
   id: number;
 
   @Column({ default: ' ' })
-  first_name: string;
+  firstName: string;
 
   @Column({ default: ' ' })
-  last_name: string;
+  lastName: string;
 
   @Column({ nullable: true })
   password: string;
 
   @Column({ default: ' ' })
-  phone_number: string;
+  phoneNumber: string;
 
   @Column({ type: 'jsonb', nullable: true })
   address: string | string;
 
   @Column({ default: false })
-  is_active: boolean;
+  isActive: boolean;
 
   @Column({ nullable: true })
-  activation_number: number;
+  activationNumber: number;
 
   @OneToMany(() => Account, (accounts) => accounts.user)
   accounts: Account[];

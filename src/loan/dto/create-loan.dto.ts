@@ -16,5 +16,5 @@ export class CreateLoanDto {
 
   @ApiProperty()
   @IsNumber()
-  payment_due: number;
+  paymentDue: number;
 }

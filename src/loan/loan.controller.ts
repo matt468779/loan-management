@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { LoanService } from './loan.service';
 import {
   Crud,
@@ -29,6 +29,7 @@ import { CreateLoanDto } from './dto/create-loan.dto';
       'account.user': { alias: 'loanAccountUser', eager: true },
       'share.user': { eager: true },
     },
+    alwaysPaginate: true,
   },
 })
 @Controller('loan')

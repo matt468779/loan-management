@@ -17,20 +17,24 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(phone_number: string, pass: string) {
+  async validateUser(phoneNumber: string, pass: string) {
     try {
       const user = await this.userService.findOne({
         where: {
-          phone_number: phone_number,
+          phoneNumber: phoneNumber,
         },
       });
 
       Logger.log('validate user');
-      Logger.log(user);
-      const hashedPassword = await bcrypt.hash(pass, 10);
-      if (user && bcrypt.compare(hashedPassword, user.password)) {
-        const { password, ...result } = user;
-        return result;
+      Logger.log(user.password);
+      // const hashedPassword = await bcrypt.hash(pass, 10);
+      if (
+        user &&
+        user.password &&
+        (await bcrypt.compare(pass, user.password))
+      ) {
+        const { password, activationNumber, ...result } = user;
+        return user;
       }
       return null;
     } catch (error) {
@@ -58,10 +62,11 @@ export class AuthService {
     try {
       const payload = {
         sub: user.id,
-        is_active: user.is_active,
-        phone_number: user.phone_number,
-        first_name: user.first_name,
+        isActive: user.isActive,
+        phoneNumber: user.phoneNumber,
+        firstName: user.firstName,
       };
+      Logger.log(user);
       return {
         access_token: this.jwtService.sign(payload),
       };

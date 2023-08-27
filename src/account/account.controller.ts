@@ -8,8 +8,8 @@ import { Account } from './entities/account.entity';
     type: Account,
   },
   params: {
-    account_number: {
-      field: 'account_number',
+    accountNumber: {
+      field: 'accountNumber',
       type: 'number',
       primary: true,
     },
@@ -21,6 +21,7 @@ import { Account } from './entities/account.entity';
         eager: true,
       },
     },
+    alwaysPaginate: true,
   },
 })
 @Controller('account')

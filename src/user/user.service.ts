@@ -4,6 +4,7 @@ import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService extends TypeOrmCrudService<User> {
@@ -11,30 +12,31 @@ export class UserService extends TypeOrmCrudService<User> {
     super(repo);
   }
 
-  async create(create_user_dto: CreateUserDto) {
-    Logger.log(create_user_dto.phone_number);
-    const result = await this.repo.save(create_user_dto);
-    result.activation_number = undefined;
+  async create(createUserDto: CreateUserDto) {
+    Logger.log(createUserDto.phoneNumber);
+    const result = await this.repo.save(createUserDto);
+    result.activationNumber = undefined;
     return result;
   }
 
   async activate(req) {
     const user: User = await this.repo.findOne({
-      where: { phone_number: req.phone_number },
+      where: { phoneNumber: req.phoneNumber },
     });
     Logger.log(req);
     Logger.log(user);
     if (!user) {
       return new BadRequestException('phone number incorrect');
     }
-    if (user.is_active) {
+    if (user.isActive) {
       return new BadRequestException('User already activated');
     }
-    if (user.activation_number != req.activation_number) {
+    if (user.activationNumber != req.activationNumber) {
       return new BadRequestException('Activation number incorrect');
     }
 
-    user.is_active = true;
+    user.isActive = true;
+    user.password = await bcrypt.hash(req.password, 10);
     await this.repo.update(user.id, user);
   }
 }
